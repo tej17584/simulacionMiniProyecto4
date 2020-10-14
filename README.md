@@ -6,7 +6,7 @@
 ¡MANCALA!
 </h1>
 
-<p align="center">¡Play Mancala!</p>
+<p align="center">¡Give it a try now!</p>
 
 
 <hr />
@@ -19,7 +19,7 @@ This project features:
 
 - :snake: **Python** — 3.8
 
-## Instalación
+## Instalation
 1. Clone this repo with `https://github.com/tej17584/simulacionMiniProyecto4.git`
 2. Go to the project directory
 3. Run `main.py`
@@ -29,5 +29,5 @@ This project features:
 ## References
 - https://github.com/kayhoogland/mancala/blob/master/mancala/game/play.py
 
-## Licencia
+## Licence
 No license.

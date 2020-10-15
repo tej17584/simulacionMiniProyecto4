@@ -33,6 +33,7 @@ class Board:
         self.player2points = 0
         self.winner = ''
         self.finish = False
+        
 
     def checkForWinner(self):
         '''Check for a winner.'''
@@ -45,11 +46,14 @@ class Board:
 
     def printBoard(self):
         print("\nCurrent board state: ")
-        print(self.board)
+        print("length: "+str(self.board))
+        print("length: "+str(len(self.board)))
+
 
     def printBoard_pretty(self):
         print("\nCurrent board state: ")
         print(self.board)
+        print("length: "+str(len(self.board))+"  finalpos: "+str(self.board[11]))
         print()
         print("\======== PLAYER 2 =========/ ")
         print("/===========================\ ")
@@ -105,7 +109,7 @@ class Board:
         #for i in hops:
         hops_plus_i = (hops+i-1)             ##This is the initial value of i where the player is going to make the move
         while(i <= hops_plus_i):
-            if(i > len(self.board)):
+            if(i >= len(self.board)):
                 self.board[i-len(self.board)] = self.board[i-len(self.board)]+1
             else:
                 print("hole position: "+str(i))
@@ -114,8 +118,7 @@ class Board:
                 print("current hole new value: "+str(self.board[i]))
             i = i + 1
 
-
-
+    
 
 Wellcome()
 

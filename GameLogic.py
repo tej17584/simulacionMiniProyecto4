@@ -36,6 +36,9 @@ class Board:
         #for randomly games
         self.player1moves = []
         self.player2moves = []
+        self.tryAgainP1 = False
+        self.tryAgainP2 = False
+
 
     def resetGame(self):
         self.board = [4,4,4,4,4,0,4,4,4,4,4,0]
@@ -47,6 +50,8 @@ class Board:
         #for randomly games
         self.player1moves = []
         self.player2moves = []
+        self.tryAgainP1 = False
+        self.tryAgainP2 = False
 
     def checkForWinner(self):
         '''Check for a winner.'''
@@ -72,7 +77,6 @@ class Board:
         print("\======== PLAYER 2 =========/ ")
         print("/===========================\ ")
         print("|/   \| "+str(self.board[10])+"  "+str(self.board[9])+"  "+str(self.board[8])+"  "+str(self.board[7])+"  "+str(self.board[6])+" |/   \|")
-        
         if(self.board[11] > 9 and self.board[5]<9):
             print("|| "+str(self.board[11])+" |" + " - - - - - - - || "+str(self.board[5])+" ||")
         elif(self.board[5]>9 and self.board[11] < 9):
@@ -88,7 +92,6 @@ class Board:
 
     def player1Turn(self,isRandom=False):
         '''Player 1 options for making a move in the game.'''
-
         if(isRandom):
             choice = random.randint(1,5)
         else:
@@ -100,38 +103,58 @@ class Board:
             print("5. e\n")
             choice = read_integer()
 
-        self.player1moves.append(choice)
+        self.player1moves.append(choice)  ##append all the moves made by the player to this array
 
         if(choice == 1):
             hops = self.board[0]   ##the hops to make would be 4 in the first iteration, because the hole will have 4 seeds
-            print("hops: "+str(hops))
-            self.board[0] = 0      ##set current hole to cero
-            i=1                    ##set next position
-            self.turnIterations(i,hops)
+            if(hops == 0):         ##if hole is empty, player most try again
+                self.tryAgainP1 = True
+            else:                  ##if it is not empty, do the move
+                print("hops: "+str(hops))
+                self.board[0] = 0      ##set current hole to cero
+                i=1                    ##set next position
+                self.turnIterations(i,hops)
+                self.tryAgainP1 = False
         elif(choice == 2):
             hops = self.board[1]   ##set the hops to make based on the seeds in the hole
-            print("hops: "+str(hops))
-            self.board[1] = 0      
-            i=2
-            self.turnIterations(i,hops)
-        elif(choice == 3):
+            if(hops == 0):
+                self.tryAgainP1 = True
+            else:
+                print("hops: "+str(hops))
+                self.board[1] = 0
+                i=2
+                self.turnIterations(i,hops)
+                self.tryAgainP1 = False
+        elif(choice == 3):            
             hops = self.board[2]    ##set the hops to make based on the seeds in the hole
-            print("hops: "+str(hops))
-            self.board[2] = 0      
-            i=3
-            self.turnIterations(i,hops)    
+            if(hops == 0):
+                self.tryAgainP1 = True
+            else:
+                print("hops: "+str(hops))
+                self.board[2] = 0      
+                i=3
+                self.turnIterations(i,hops)    
+                self.tryAgainP1 = False
         elif(choice == 4):
             hops = self.board[3]    ##set the hops to make based on the seeds in the hole
-            print("hops: "+str(hops))
-            self.board[3] = 0      
-            i=4
-            self.turnIterations(i,hops)
+            if(hops == 0):
+                self.tryAgainP1 = True
+            else:                
+                print("hops: "+str(hops))
+                self.board[3] = 0      
+                i=4
+                self.turnIterations(i,hops)
+                self.tryAgainP1 = False
         elif(choice == 5):
             hops = self.board[4]    ##set the hops to make based on the seeds in the hole
-            print("hops: "+str(hops))
-            self.board[4] = 0      
-            i=5
-            self.turnIterations(i,hops)
+            if(hops == 0):
+                self.tryAgainP1 = True
+            else:                
+                print("hops: "+str(hops))
+                self.board[4] = 0      
+                i=5
+                self.turnIterations(i,hops)
+                self.tryAgainP1 = False
 
     def turnIterations(self,i,hops):
         '''Add seeds to the next hole and return to the first hole when number of hops exceeds len(array)'''
@@ -162,40 +185,68 @@ class Board:
 
         if(choice == 1):
             hops = self.board[6]   ##Same logic as player one, but this time we start on the 6th position
-            print("hops: "+str(hops))
-            self.board[6] = 0      ##set current hole to cero
-            i=7                    ##set next position
-            self.turnIterations(i,hops)
+            if(hops == 0):
+                self.tryAgainP2 = True
+            else:
+                print("hops: "+str(hops))
+                self.board[6] = 0      ##set current hole to cero
+                i=7                    ##set next position
+                self.turnIterations(i,hops)
+                self.tryAgainP2 = False
         elif(choice == 2):
             hops = self.board[7]   ##set the hops to make based on the seeds in the hole
-            print("hops: "+str(hops))
-            self.board[7] = 0      
-            i=8
-            self.turnIterations(i,hops)
+            if(hops == 0):
+                self.tryAgainP2 = True
+            else:
+                print("hops: "+str(hops))
+                self.board[7] = 0      
+                i=8
+                self.turnIterations(i,hops)
+                self.tryAgainP2 = False
         elif(choice == 3):
             hops = self.board[8]    ##set the hops to make based on the seeds in the hole
-            print("hops: "+str(hops))
-            self.board[8] = 0      
-            i=9
-            self.turnIterations(i,hops)    
+            if(hops == 0):
+                self.tryAgainP2 = True
+            else:
+                print("hops: "+str(hops))
+                self.board[8] = 0      
+                i=9
+                self.turnIterations(i,hops)    
+                self.tryAgainP2 = False
         elif(choice == 4):
             hops = self.board[9]    ##set the hops to make based on the seeds in the hole
-            print("hops: "+str(hops))
-            self.board[9] = 0      
-            i=10
-            self.turnIterations(i,hops)
+            if(hops == 0):
+                self.tryAgainP2 = True
+            else:
+                print("hops: "+str(hops))
+                self.board[9] = 0      
+                i=10
+                self.turnIterations(i,hops)
+                self.tryAgainP2 = False
         elif(choice == 5):
             hops = self.board[10]    ##set the hops to make based on the seeds in the hole
-            print("hops: "+str(hops))
-            self.board[10] = 0      
-            i=11
-            self.turnIterations(i,hops)
+            if(hops == 0):
+                self.tryAgainP2 = True
+            else:
+                print("hops: "+str(hops))
+                self.board[10] = 0      
+                i=11
+                self.turnIterations(i,hops)
+                self.tryAgainP2 = False
 
     def letsPlayRandomly(self):
         i = 0
         while(self.finish == False):
-            self.player1Turn(True)
-            self.player2Turn(True)
+            self.player1Turn(True)     ##player 1 makes a move
+            ##if and while that force the player to choose a non empty hole               
+            while(self.tryAgainP1 == True):
+                self.player1Turn(True)
+
+            self.player2Turn(True)     ##player 2 makes a move
+            ##if and while that force the player to choose a non empty hole     
+            while(self.tryAgainP2 == True):
+                self.player2Turn(True)
+
             self.updateScore()
             self.checkForWinner()
             i = i+1
@@ -210,12 +261,22 @@ class Board:
         i = 0
         self.printBoard_pretty()
         while(self.finish == False):
-            self.player1Turn()
-            self.player2Turn(True)
+            self.player1Turn()                ##player 1 makes a move
+            ##if and while that force the player to choose a non empty hole       
+            while(self.tryAgainP1 == True):
+                print('You cannot take seeds from an empty hole! Try Again!')
+                self.player1Turn()
+
+            self.player2Turn(True)            ##player 2 makes a move
+            ##if and while that force the player to choose a non empty hole                 
+            while(self.tryAgainP2 == True):
+                self.player2Turn(True)
+
             self.updateScore()
             self.checkForWinner()
             i = i+1
             self.printBoard_pretty()
+
         print('The winner is: '+ self.winner)
         print(str(i) +' moves in total!')
         print('Player 1 moves: '+str(self.player1moves))
@@ -271,14 +332,4 @@ def menu():
     if(exit == 0):
         menu()
 
-
 menu()
-'''
-arr = [1,2,3,4]
-for i in range(0,10):
-    arr.append(i)
-
-print(arr)
-
-'''
-

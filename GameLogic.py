@@ -1,5 +1,5 @@
 ####################################################################
-# Alejandro Teajada 17854
+# Alejandro Tejada 17854
 # Diego Sevilla 17238
 ####################################################################
 # Curso: Redes
@@ -18,13 +18,13 @@
 # --------------ZONA DE MODULOS----------------------
 
 from Functions import *
-
+import random
 
 ##seeds=40
 
 class Board:
     """
-    Mancala logic game class 
+    Implements Mancala logic game class 
     """
     def __init__(self):
         self.board = [4,4,4,4,4,0,4,4,4,4,4,0]
@@ -33,43 +33,74 @@ class Board:
         self.player2points = 0
         self.winner = ''
         self.finish = False
-        
+        #for randomly games
+        self.player1moves = []
+        self.player2moves = []
+
+    def resetGame(self):
+        self.board = [4,4,4,4,4,0,4,4,4,4,4,0]
+        self.turns_executed = []
+        self.player1points = 0
+        self.player2points = 0
+        self.winner = ''
+        self.finish = False
+        #for randomly games
+        self.player1moves = []
+        self.player2moves = []
 
     def checkForWinner(self):
         '''Check for a winner.'''
-        if (self.board[0] >= 20 ):
+        if (self.board[5] >= 20 ):
             self.winner = 'player1'
-            finish = True
-        elif(self.board[6] >= 20):
+            self.finish = True
+        elif(self.board[11] >= 20):
             self.winner = 'player2'
-            finish = True
+            self.finish = True
+
+    def updateScore(self):
+        '''Set player 1 and player 2 points'''
+        self.player1points = self.board[5]
+        self.player2points = self.board[11]
 
     def printBoard(self):
         print("\nCurrent board state: ")
         print(self.board)
         print("length: "+str(len(self.board))+"  finalpos: "+str(self.board[11]))
 
-
     def printBoard_pretty(self):        
         print()
         print("\======== PLAYER 2 =========/ ")
         print("/===========================\ ")
         print("|/   \| "+str(self.board[10])+"  "+str(self.board[9])+"  "+str(self.board[8])+"  "+str(self.board[7])+"  "+str(self.board[6])+" |/   \|")
-        print("|| "+str(self.board[11])+" ||" + " - - - - - - - || "+str(self.board[5])+" ||")
+        
+        if(self.board[11] > 9 and self.board[5]<9):
+            print("|| "+str(self.board[11])+" |" + " - - - - - - - || "+str(self.board[5])+" ||")
+        elif(self.board[5]>9 and self.board[11] < 9):
+            print("|| "+str(self.board[11])+" ||" + " - - - - - - - | "+str(self.board[5])+" ||")
+        elif(self.board[11] > 9 and self.board[5]>9):
+            print("|| "+str(self.board[11])+" |" + " - - - - - - - | "+str(self.board[5])+" ||")
+        else:
+            print("|| "+str(self.board[11])+" ||" + " - - - - - - - || "+str(self.board[5])+" ||")
         print("|\   /| "+str(self.board[0])+"  "+str(self.board[1])+"  "+str(self.board[2])+"  "+str(self.board[3])+"  "+str(self.board[4])+" |\   /|")
         print("\===========================/")
         print("/======== PLAYER 1 =========\ ")
         print()
 
-    def player1Turn(self):
+    def player1Turn(self,isRandom=False):
         '''Player 1 options for making a move in the game.'''
-        print("\nMove: ")
-        print("1. a")
-        print("2. b")
-        print("3. c")
-        print("4. d")
-        print("5. e\n")
-        choice = read_integer()
+
+        if(isRandom):
+            choice = random.randint(1,5)
+        else:
+            print("\nMove: ")
+            print("1. a")
+            print("2. b")
+            print("3. c")
+            print("4. d")
+            print("5. e\n")
+            choice = read_integer()
+
+        self.player1moves.append(choice)
 
         if(choice == 1):
             hops = self.board[0]   ##the hops to make would be 4 in the first iteration, because the hole will have 4 seeds
@@ -104,7 +135,6 @@ class Board:
 
     def turnIterations(self,i,hops):
         '''Add seeds to the next hole and return to the first hole when number of hops exceeds len(array)'''
-        #for i in hops:
         hops_plus_i = (hops+i-1)             ##This is the initial value of i where the player is going to make the move
         while(i <= hops_plus_i):
             if(i >= len(self.board)):
@@ -116,15 +146,19 @@ class Board:
                 print("current hole new value: "+str(self.board[i]))
             i = i + 1
 
-    def player2Turn(self):
+    def player2Turn(self,isRandom=False):
         '''Player 2 options for making a move in the game.'''
-        print("\nMove: ")
-        print("1. a")
-        print("2. b")
-        print("3. c")
-        print("4. d")
-        print("5. e\n")
-        choice = read_integer()
+        if(isRandom):
+            choice = random.randint(1,5)
+        else:
+            print("\nMove: ")
+            print("1. a")
+            print("2. b")
+            print("3. c")
+            print("4. d")
+            print("5. e\n")
+            choice = read_integer()
+        self.player2moves.append(choice)
 
         if(choice == 1):
             hops = self.board[6]   ##Same logic as player one, but this time we start on the 6th position
@@ -157,17 +191,55 @@ class Board:
             i=11
             self.turnIterations(i,hops)
 
+    def letsPlayRandomly(self):
+        i = 0
+        while(self.finish == False):
+            self.player1Turn(True)
+            self.player2Turn(True)
+            self.updateScore()
+            self.checkForWinner()
+            i = i+1
+        print('The winner is: '+ self.winner)
+        print('Player 1 moves: '+str(self.player1moves))
+        print('Player 2 moves: '+str(self.player2moves))
+        print('The final state of the board is:')
+        self.printBoard_pretty()
+        self.resetGame()
+
+    def playWithDummyComputer(self):
+        i = 0
+        self.printBoard_pretty()
+        while(self.finish == False):
+            self.player1Turn()
+            self.player2Turn(True)
+            self.updateScore()
+            self.checkForWinner()
+            i = i+1
+            self.printBoard_pretty()
+        print('The winner is: '+ self.winner)
+        print(str(i) +' moves in total!')
+        print('Player 1 moves: '+str(self.player1moves))
+        print('Player 2 moves: '+str(self.player2moves))
+        print('The final state of the board is:')
+        self.printBoard_pretty()
+        self.resetGame()
+
 Wellcome()
 
 mancala = Board()
 
 def menu():
+    exit = 0
     print(" ")
     print("-----------------------------------------------------------------")
+    print(" **********Testing**********")
     print(" 1. My turn")
-    print(" 2. Player 2 turn")
-    print(" 3. Print board")
-    print(" 4. Exit")
+    print(" 2. Player 2 Turn")
+    print(" ***************************")
+    print(" 3. Play with dummy computer")
+    print(" 4. Print board")
+    print(" 5. RandomGameComputer")
+    print(" 6. Exit")
     print("__________________________________________________________________\n")
 
     choice = read_integer()
@@ -182,18 +254,31 @@ def menu():
         menu()   
     elif choice == 3:
         print(" ")
-        #mancala.printBoard()
-        mancala.printBoard_pretty()
+        mancala.playWithDummyComputer()
         menu() 
     elif choice == 4:
         print(" ")
+        mancala.printBoard_pretty()
+        menu() 
+    elif choice == 5:
+        print(" ")
+        mancala.letsPlayRandomly()
+        menu() 
+    elif choice == 6:
+        print(" ")
+        exit = 1
         theEnd()
-
-    menu()
-
+    if(exit == 0):
+        menu()
 
 
 menu()
+'''
+arr = [1,2,3,4]
+for i in range(0,10):
+    arr.append(i)
 
+print(arr)
 
+'''
 

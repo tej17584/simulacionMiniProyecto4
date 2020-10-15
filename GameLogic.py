@@ -47,6 +47,17 @@ class Board:
         print("\nCurrent board state: ")
         print(self.board)
 
+    def printBoard_pretty(self):
+        print("\nCurrent board state: ")
+        print(self.board)
+        print()
+        print("\======== PLAYER 2 =========/ ")
+        print("/===========================\ ")
+        print("|/   \| "+str(self.board[10])+"  "+str(self.board[9])+"  "+str(self.board[8])+"  "+str(self.board[7])+"  "+str(self.board[6])+" |/   \|")
+        print("|| "+str(self.board[11])+" ||" + " - - - - - - - || "+str(self.board[5])+" ||")
+        print("|\   /| "+str(self.board[0])+"  "+str(self.board[1])+"  "+str(self.board[2])+"  "+str(self.board[3])+"  "+str(self.board[4])+" |\   /|")
+        print("\===========================/")
+        print("/======== PLAYER 1 =========\ ")
 
     def player1Turn(self):
         '''Options for making a move in the game.'''
@@ -60,26 +71,31 @@ class Board:
 
         if(choice == 1):
             hops = self.board[0]   ##the hops to make would be 4 in the first iteration, because the hole will have 4 seeds
+            print("hops: "+str(hops))
             self.board[0] = 0      ##set current hole to cero
             i=1                    ##set next position
             self.turnIterations(i,hops)
         elif(choice == 2):
             hops = self.board[1]   ##set the hops to make based on the seeds in the hole
+            print("hops: "+str(hops))
             self.board[1] = 0      
             i=2
             self.turnIterations(i,hops)
         elif(choice == 3):
             hops = self.board[2]    ##set the hops to make based on the seeds in the hole
+            print("hops: "+str(hops))
             self.board[2] = 0      
             i=3
             self.turnIterations(i,hops)    
         elif(choice == 4):
             hops = self.board[3]    ##set the hops to make based on the seeds in the hole
+            print("hops: "+str(hops))
             self.board[3] = 0      
             i=4
             self.turnIterations(i,hops)
         elif(choice == 5):
             hops = self.board[4]    ##set the hops to make based on the seeds in the hole
+            print("hops: "+str(hops))
             self.board[4] = 0      
             i=5
             self.turnIterations(i,hops)
@@ -87,11 +103,15 @@ class Board:
     def turnIterations(self,i,hops):
         '''Add seeds to the next hole and return to the first hole when number of hops exceeds len(array)'''
         #for i in hops:
-        while(i <= hops):
+        hops_plus_i = (hops+i-1)             ##This is the initial value of i where the player is going to make the move
+        while(i <= hops_plus_i):
             if(i > len(self.board)):
                 self.board[i-len(self.board)] = self.board[i-len(self.board)]+1
             else:
+                print("hole position: "+str(i))
+                print("current hole old value: "+str(self.board[i]))
                 self.board[i] = self.board[i]+1
+                print("current hole new value: "+str(self.board[i]))
             i = i + 1
 
 
@@ -117,7 +137,8 @@ def menu():
         menu()   
     elif choice == 2:
         print(" ")
-        mancala.printBoard()
+        #mancala.printBoard()
+        mancala.printBoard_pretty()
         menu()   
     elif choice == 3:
         print(" ")

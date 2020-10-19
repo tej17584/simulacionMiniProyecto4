@@ -22,10 +22,49 @@ This project features:
 ## Instalation
 1. Clone this repo with `https://github.com/tej17584/simulacionMiniProyecto4.git`
 2. Go to the project directory
-3. Run `main.py`
+3. Run `mancalaMain.py`
 
 ### How to play Mancala?
+- Run `python mancalaMain.py`, and you will see a menu, like this
+```python
+      ______________________________________________________________________________________
+                     ¡   ¡   M   A   N   C   A   L   A   !   !
+    ______________________________________________________________________________________
+    --------------------------------------------------------------------------------------
+                            #######################################
+                                  ************************
+    --------------------------------------------------------------------------------------
+    1. Play with dummy computer
+    2. Play with advanced computer
+    3. Play with pro computer
+    4. Print board
+    5. Exit (Press 6 until exit)
+    ______________________________________________________________________________________              
+```
 
+- Choose a dificult to play with. The PC has 3 levels: dummy, advanced and PRO. The first one has no iterations of montecarlo algorithm, the advanced has 500 iterations and the last one has 10,000 (big eh?!!).
+- You will see a menu, like this:
+```python
+Choose an option: 1
+
+
+\======== PLAYER 2 =========/ 
+/===========================\ 
+|/   \| 4  4  4  4  4 |/   \| 
+|| 0 || - - - - - - - || 0 || 
+|\   /| 4  4  4  4  4 |\   /|
+\===========================/
+/======== PLAYER 1 =========\ 
+
+
+Move:
+1. a
+2. b
+3. c
+4. d
+5. e
+```
+- Choose a move to make, and have fun. 
 ## References
 - https://github.com/kayhoogland/mancala/blob/master/mancala/game/play.py
 

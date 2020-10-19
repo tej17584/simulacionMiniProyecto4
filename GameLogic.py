@@ -272,6 +272,7 @@ class Board:
         self.checkFinishTurns()          ##Check if a player has run out of turns
 
     def letsPlayRandomly(self):
+        '''Computer makes a random play between players and display results.'''
         i = 0
         while(self.finish == False and self.finishTurns == False):
             self.player1Turn(True)     ##player 1 makes a move
@@ -309,6 +310,8 @@ class Board:
         self.resetGame()
 
     def playWithDummyComputer(self):
+        '''Play with Dummy computer. Computer will play with you with random moves, 
+        no intelligence or cheating.'''
         i = 0
         self.printBoard_pretty()
         while(self.finish == False and self.finishTurns == False):
